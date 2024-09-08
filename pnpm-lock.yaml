@@ -170,9 +170,9 @@ importers:
         specifier: ^18.2.0
         version: 18.3.1
     devDependencies:
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
+      '@biomejs/biome':
+        specifier: 1.8.3
+        version: 1.8.3
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
