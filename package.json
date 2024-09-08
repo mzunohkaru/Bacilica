@@ -4,10 +4,14 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "dev:client": "turbo dev --filter=client",
     "dev:server": "turbo dev --filter=server",
     "check": "turbo check",
     "lint": "turbo lint",
-    "format": "turbo format"
+    "format": "turbo format",
+    "docker:db": "docker compose -f packages/database/docker-compose.yaml up -d",
+    "db:deploy": "cd packages/database && pnpm dlx prisma migrate deploy",
+    "generate": "cd packages/database && pnpm dlx prisma generate"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
