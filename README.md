@@ -8,5 +8,6 @@ pnpm install
 pnpm docker:db
 pnpm db:deploy
 pnpm generate
+pnpm db:seed
 pnpm dev
 ```
