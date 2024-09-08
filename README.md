@@ -3,17 +3,10 @@
 - node 20.12.2
 
 ### SetUp
-
 ```
+pnpm install
 pnpm docker:db
 pnpm db:deploy
 pnpm generate
-pnpm dev
-```
-
-
-### Develop
-
-```
 pnpm dev
 ```
