@@ -8,6 +8,19 @@ pnpm install
 pnpm docker:db
 pnpm db:deploy
 pnpm generate
+cd packages/database
 pnpm db:seed
+cd ../..
 pnpm dev
+```
+
+### Development
+```
+pnpm dev
+```
+```
+pnpm dev:client
+```
+```
+pnpm dev:server
 ```
