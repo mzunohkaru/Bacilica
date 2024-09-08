@@ -28,5 +28,12 @@
       "lineWidth": 80,
       "quoteProperties": "asNeeded"
     }
+  },
+  "json": {
+    "formatter": {
+      "enabled": true,
+      "indentWidth": 2,
+      "indentStyle": "space"
+    }
   }
 }

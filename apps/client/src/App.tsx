@@ -1,34 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+'use client'
 
-function App() {
-  const [count, setCount] = useState(0)
+import { useUser } from '@/hook/useUser'
+import { usePost } from '@/hook/usePost'
+
+export function App() {
+  const { userData, fetchUser, isMutating, error, createUserData, createUser } =
+    useUser()
+  const handleFetchUser = () => {
+    fetchUser()
+    console.log('userData', userData)
+  }
+
+  const handleCreateUser = () => {
+    createUser()
+    console.log('createUserData', createUserData)
+  }
+
+  const { postData } = usePost()
+  console.log('postData', postData)
 
   return (
-    <>
-      <div>
-        <a href='https://vitejs.dev' target='_blank' rel='noreferrer'>
-          <img src={viteLogo} className='logo' alt='Vite logo' />
-        </a>
-        <a href='https://react.dev' target='_blank' rel='noreferrer'>
-          <img src={reactLogo} className='logo react' alt='React logo' />
-        </a>
-      </div>
-      <h1 className='text-2xl font-bold'>Vite + React</h1>
-      <div className='card'>
-        <button onClick={() => setCount(count => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className='read-the-docs'>
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <main>
+        <h1 className="text-2xl font-bold text-center">Client</h1>
+        <button className="bg-blue-500 text-white p-2 rounded-md" onClick={() => handleFetchUser()}>Fetch User</button>
+        <button className="bg-green-500 text-white p-2 rounded-md" onClick={() => handleCreateUser()}>Create User</button>
+        <div>
+          <p>userData: {JSON.stringify(userData)}</p>
+          <p>isMutating: {JSON.stringify(isMutating)}</p>
+          <p>error: {JSON.stringify(error)}</p>
+        </div>
+      </main>
+      <footer>
+        <div className="bg-red-500 text-white p-2 rounded-md">
+          <p>postData: {JSON.stringify(postData)}</p>
+        </div>
+      </footer>
+    </div>
   )
 }
 
