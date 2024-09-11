@@ -40,13 +40,10 @@
       "cache": false,
       "persistent": true
     },
-    "db:generate": {
+    "generate": {
       "cache": false
     },
     "db:deploy": {
-      "cache": false
-    },
-    "db:studio": {
       "cache": false
     },
     "db:seed": {
