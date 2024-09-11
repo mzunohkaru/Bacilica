@@ -5,12 +5,11 @@
 ### SetUp
 ```
 pnpm install
+cp packages/database/.env.example packages/database/.env && cp apps/server/.env.example apps/server/.env
 pnpm docker:db
 pnpm db:deploy
 pnpm generate
-cd packages/database
 pnpm db:seed
-cd ../..
 pnpm dev
 ```
 

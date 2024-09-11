@@ -1,5 +1,5 @@
 {
-  "name": "SNS-Job-Pj",
+  "name": "Bacilica",
   "private": true,
   "scripts": {
     "build": "turbo build",
@@ -10,8 +10,9 @@
     "lint": "turbo lint",
     "format": "turbo format",
     "docker:db": "docker compose -f packages/database/docker-compose.yaml up -d",
-    "db:deploy": "cd packages/database && pnpm dlx prisma migrate deploy",
-    "generate": "cd packages/database && pnpm dlx prisma generate"
+    "db:deploy": "turbo db:deploy",
+    "generate": "cd packages/database && pnpm dlx prisma generate",
+    "db:seed": "turbo db:seed"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
