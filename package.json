@@ -9,6 +9,8 @@
     "check": "turbo check",
     "lint": "turbo lint",
     "format": "turbo format",
+    "lint:apps": "biome lint --apply ./apps",
+    "format:apps": "biome format --write ./apps",
     "docker:db": "docker compose -f packages/database/docker-compose.yaml up -d",
     "db:deploy": "turbo db:deploy",
     "generate": "cd packages/database && pnpm dlx prisma generate",
