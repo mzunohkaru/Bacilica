@@ -23,7 +23,7 @@ app.onError((err, c) => {
   return c.json({ message: err.message }, 500)
 })
 
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 3000
 
 serve({
   fetch: app.fetch,

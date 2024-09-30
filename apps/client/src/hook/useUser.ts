@@ -3,7 +3,7 @@ import useSWRMutation from 'swr/mutation'
 import { getFetcher, postFetcher } from '@/lib/fetch'
 import type { UserResponse } from '@repo/schema'
 
-const url = 'http://localhost:8080/api/users'
+const url = 'http://localhost:3000/api/users'
 
 const fetcher = async (url: string) => {
   try {

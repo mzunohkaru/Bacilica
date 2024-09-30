@@ -52,13 +52,13 @@ export default function Home() {
         </div>
 
         <div className='flex gap-4 items-center flex-col sm:flex-row'>
-          <Button onClick={handleFetchUser}>Fetch User</Button>
+          <Button onClick={handleFetchUser}>Fetch User！！！</Button>
           <Button onClick={handleCreateUser}>Create User</Button>
         </div>
       </main>
       <footer
         className='
-  
+
   row-start-3 flex gap-6 flex-wrap items-center justify-center'
       >
         <a
