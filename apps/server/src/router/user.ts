@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 
 import prisma from '@repo/database'
-import { UserResponse } from '@repo/schema'
+import type { UserResponse } from '@repo/schema'
 
 const app = new Hono().get(async c => {
   const users: UserResponse[] = await prisma.user.findMany()

@@ -9,20 +9,30 @@
     "check": "turbo check",
     "lint": "turbo lint",
     "format": "turbo format",
-    "lint:apps": "biome lint --apply ./apps",
-    "format:apps": "biome format --write ./apps",
+    "lint:apps": "biome lint --write apps/**/*.{js,ts}",
+    "format:apps": "biome format --write apps/**/*.{js,ts}",
     "docker:db": "docker compose -f packages/database/docker-compose.yaml up -d",
     "db:deploy": "turbo db:deploy",
     "generate": "cd packages/database && pnpm dlx prisma generate",
-    "db:seed": "turbo db:seed"
+    "db:seed": "turbo db:seed",
+    "prepare": "husky install"
   },
   "devDependencies": {
+    "husky": "^8.0.0",
+    "lint-staged": "^15.2.10",
     "prettier": "^3.2.5",
     "turbo": "^2.1.1",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "@biomejs/biome": "1.8.3"
   },
   "packageManager": "pnpm@8.15.9",
   "engines": {
     "node": ">=20"
+  },
+  "lint-staged": {
+    "apps/**/*.{js,jsx,ts,tsx}": [
+      "biome lint --apply",
+      "biome format --write"
+    ]
   }
 }

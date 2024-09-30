@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 
-import { PostResponse } from '@repo/schema'
+import type { PostResponse } from '@repo/schema'
 
 const app = new Hono().get(async c => {
   const posts: PostResponse = {
