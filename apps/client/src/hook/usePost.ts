@@ -4,7 +4,7 @@ import { AxiosError } from 'axios'
 import { getFetcher } from '@/lib/fetch'
 import type { PostResponse } from '@repo/schema'
 
-const url = 'http://localhost:8080/api/posts'
+const url = 'http://localhost:3000/api/posts'
 
 const fetcher = async (url: string) => {
   try {

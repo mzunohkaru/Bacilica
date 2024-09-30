@@ -22,7 +22,7 @@ networks:
   app_network:
     driver: bridge
     internal: false
-    name: sns-job-app-network
+    name: bacilica-network
 
 volumes:
   db-data:
