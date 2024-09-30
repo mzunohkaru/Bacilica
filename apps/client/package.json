@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev -p 5173",
     "build": "next build",
-    "start": "next start",
+    "start": "PORT=5173 next start",
     "check": "biome check ./src",
     "lint": "biome lint --apply ./src",
     "format": "biome format --write ./src"
