@@ -32,10 +32,18 @@ RUN chown -R node:node /app
 USER node
 COPY --from=installer --chown=node:node /app .
 RUN pnpm install --no-frozen-lockfile
-# CMD [ "pnpm", "turbo", "dev:docker", "--filter", "client" ]
 
-FROM nginx:alpine AS production
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=installer /app/apps/client/dist /usr/share/nginx/html
-EXPOSE 80/tcp
-CMD [ "/usr/sbin/nginx", "-g", "daemon off;" ]
+FROM base AS production
+WORKDIR /app
+ENV NODE_ENV=production
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+COPY --from=installer --chown=nextjs:nodejs /app/apps/client/.next/standalone ./
+COPY --from=installer --chown=nextjs:nodejs /app/apps/client/.next/static ./apps/client/.next/static
+USER nextjs
+EXPOSE 80
+ENV PORT=80
+ENV HOSTNAME="0.0.0.0"
+CMD ["node", "apps/client/server.js"]
