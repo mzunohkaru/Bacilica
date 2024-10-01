@@ -52,6 +52,11 @@ pnpm dev:server
 
 ## Dockerの使用
 
+### 本番環境のDockerコンテナ起動:
+```
+pnpm docker
+```
+
 ### 開発環境のDockerコンテナ起動:
 ```
 pnpm docker:dev
