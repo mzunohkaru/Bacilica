@@ -36,10 +36,10 @@ RUN pnpm install --no-frozen-lockfile
 FROM base AS production
 WORKDIR /app
 ENV NODE_ENV=production
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs && \
+    mkdir .next && \
+    chown nextjs:nodejs .next
 COPY --from=installer --chown=nextjs:nodejs /app/apps/client/.next/standalone ./
 COPY --from=installer --chown=nextjs:nodejs /app/apps/client/.next/static ./apps/client/.next/static
 USER nextjs
