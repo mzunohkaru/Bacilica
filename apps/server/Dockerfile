@@ -35,13 +35,13 @@ RUN pnpm install --no-frozen-lockfile
 RUN pnpm generate
 
 FROM base AS production
-ENV DATABASE_URL="postgresql://myuser:mypassword@db:5432/mydb?schema=public"
 WORKDIR /app
 RUN apk --no-cache add curl
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 server
 USER server
+COPY --from=installer --chown=server:nodejs /app/apps/server/node_modules /app/node_modules/
 COPY --from=installer --chown=server:nodejs /app/apps/server/dist .
-COPY --from=installer --chown=server:nodejs /app/packages/database/src/generated/client/ /app/src/generated/client/
-COPY --from=installer --chown=server:nodejs /app/packages/database/src/generated/client/ .prisma/client
+COPY --from=installer --chown=server:nodejs /app/packages/database/node_modules/@prisma/client/ /app/src/generated/client/
+COPY --from=installer --chown=server:nodejs /app/packages/database/node_modules/@prisma/client/ .prisma/client
 CMD [ "node", "index.js" ]

@@ -36,6 +36,10 @@
       "cache": false,
       "persistent": true
     },
+    "docker": {
+      "cache": false,
+      "persistent": true
+    },
     "docker:db": {
       "cache": false,
       "persistent": true
