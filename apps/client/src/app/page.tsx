@@ -61,10 +61,10 @@ export default function Home() {
             <></>}
             <button onClick={() => {setIsShow(!isShow)}}>show API function</button>
           </div>
-          <section className='flex flex-row justify-around h-[10vh] items-center z-10 text-4xl font-leckerli bg-black'>
-          <button>log in</button>
-          <div className='h-[70%] border border-white'></div>
-            <button>sign up</button>
+          <section className='flex flex-row h-[10vh] justify-center w-full items-center z-10 text-4xl font-leckerli bg-black'>
+            <button className='flex-grow'>log in</button>
+            <div className='h-[70%] border border-white'></div>
+            <button className='flex-grow'>sign up</button>
           </section>
         </main>
       </div>
