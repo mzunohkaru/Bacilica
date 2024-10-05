@@ -9,10 +9,66 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    String @id @default(cuid())
-  email String @unique
-  name  String
+model Auth {
+  uid          String    @id @default(uuid()) @db.Uuid
+  email        String    @unique
+  password     String
+  provider     String
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+  lastSignInAt DateTime? @map("last_sign_in_at") @db.Timestamptz(3)
+
+  users Users[]
+
+  @@map("auth")
+}
+
+model Users {
+  uid             String    @id @db.Uuid
+  auth            Auth      @relation(fields: [uid], references: [uid])
+  userName        String    @map("user_name")
+  profile         String?
+  avatarUrl       String?   @map("avatar_url")
+  userTypeId      Int       @map("user_type_id")
+  userType        UserTypes @relation(fields: [userTypeId], references: [id])
+  invitedTicketId String?   @map("invited_ticket_id")
+  invitedToken    String?   @map("invited_token")
+  githubUrl       String?   @map("github_url")
+
+  following Follows[] @relation("following")
+  followers Follows[] @relation("followers")
+
+  blockers Blocks[] @relation("blockers")
+  blockings Blocks[] @relation("blockings")
 
   @@map("users")
+}
+
+model UserTypes {
+  id       Int    @id @default(autoincrement())
+  userType String @map("user_type")
+
+  users Users[]
+
+  @@map("user_types")
+}
+
+model Follows {
+  follower     Users  @relation("followers", fields: [followerUid], references: [uid])
+  followerUid  String @db.Uuid @map("follower_uid")
+  following    Users  @relation("following", fields: [followingUid], references: [uid])
+  followingUid String @db.Uuid @map("following_uid")
+
+  @@id([followerUid, followingUid])
+  @@map("follows")
+}
+
+model Blocks {
+  blocker     Users  @relation("blockers", fields: [blockerUid], references: [uid])
+  blockerUid  String @db.Uuid @map("blocker_uid")
+  blocking    Users  @relation("blockings", fields: [blockingUid], references: [uid])
+  blockingUid String @db.Uuid @map("blocking_uid")
+
+  @@id([blockerUid, blockingUid])
+  @@map("blocks")
 }
