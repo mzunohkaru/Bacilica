@@ -30,7 +30,6 @@ model Users {
   profile       String?
   avatarUrl     String?   @map("avatar_url")
   userTypeId    Int       @map("user_type_id")
-  userType      UserTypes @relation(fields: [userTypeId], references: [id])
   invitedTicket Int       @default(0) @map("invited_ticket")
   invitedToken  String?   @map("invited_token")
   githubUrl     String?   @map("github_url")
@@ -42,15 +41,6 @@ model Users {
   blockings Blocks[] @relation("blockings")
 
   @@map("users")
-}
-
-model UserTypes {
-  id       Int    @id @default(autoincrement())
-  userType String @map("user_type")
-
-  users Users[]
-
-  @@map("user_types")
 }
 
 model Follows {
