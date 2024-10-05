@@ -1,19 +1,18 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from '@/index'
 
-const prisma = new PrismaClient()
+import { AuthSeed } from '@/users/auth'
+import { UserSeed } from '@/users/user'
 
-async function Seed() {
-  const userData = {
-    name: 'テストユーザー',
-    email: 'test@example.com',
-  }
-
-  await prisma.user.create({
-    data: userData,
+AuthSeed()
+  .catch(e => {
+    console.error(e)
   })
-}
+  .finally(async () => {
+    await prisma.$disconnect()
+  })
 
-Seed()
+
+UserSeed()
   .catch(e => {
     console.error(e)
   })
