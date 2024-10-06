@@ -137,6 +137,9 @@ importers:
       '@biomejs/biome':
         specifier: 1.8.3
         version: 1.8.3
+      '@repo/schema':
+        specifier: '*'
+        version: link:../schema
       '@repo/typescript-config':
         specifier: '*'
         version: link:../typescript-config
@@ -149,6 +152,9 @@ importers:
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@22.5.4)(typescript@5.5.4)
+      tsconfig-paths:
+        specifier: ^4.2.0
+        version: 4.2.0
       typescript:
         specifier: ^5.5.4
         version: 5.5.4
