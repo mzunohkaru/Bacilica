@@ -1,11 +1,8 @@
 import { Hono } from 'hono'
 
 import prisma from '@repo/database'
-import {
-  AuthRequest,
-  AuthResponse,
-  AuthDTO,
-} from '@repo/schema'
+import { AuthRequest, AuthResponse } from '@repo/schema/server'
+import { AuthDTO } from '@repo/schema/DTO'
 
 const app = new Hono()
   .post('/get-auth', async c => {

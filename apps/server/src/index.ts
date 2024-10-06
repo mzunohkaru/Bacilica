@@ -4,9 +4,9 @@ import { logger } from 'hono/logger'
 import { prettyJSON } from 'hono/pretty-json'
 import { serve } from '@hono/node-server'
 
-import users from '@/router/users'
+import user from '@/router/user'
 import auth from '@/router/auth'
-
+import follow from '@/router/follow'
 const app = new Hono().basePath('/api')
 
 app.use(cors())
@@ -21,8 +21,9 @@ app
     console.error(err)
     return c.json({ message: err.message }, 500)
   })
-  .route('/users', users)
+  .route('/user', user)
   .route('/auth', auth)
+  .route('/follow', follow)
 
 const PORT = process.env.PORT || 3000
 
