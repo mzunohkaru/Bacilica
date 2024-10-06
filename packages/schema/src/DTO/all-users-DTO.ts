@@ -10,5 +10,4 @@ export const AllUsersDTO = z.object({
   githubUrl: z.string().optional(),
 })
 
-export type AllUsersDTO = z.infer<typeof AllUsersDTO
->
+export type AllUsersDTO = z.infer<typeof AllUsersDTO>

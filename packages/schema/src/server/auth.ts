@@ -3,7 +3,11 @@ import z from 'zod'
 export const AuthRequest = z.object({
   email: z.string().email(),
   password: z.string().min(6),
-  provider: z.union([z.literal('email'), z.literal('Github'), z.literal('Google')]),
+  provider: z.union([
+    z.literal('email'),
+    z.literal('Github'),
+    z.literal('Google'),
+  ]),
   lastSignInAt: z.date(),
 })
 
