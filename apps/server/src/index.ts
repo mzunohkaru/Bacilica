@@ -4,8 +4,8 @@ import { logger } from 'hono/logger'
 import { prettyJSON } from 'hono/pretty-json'
 import { serve } from '@hono/node-server'
 
-// import user from '@/router/user'
-import post from '@/router/post'
+import users from '@/router/users'
+import auth from '@/router/auth'
 
 const app = new Hono().basePath('/api')
 
@@ -16,12 +16,13 @@ app.notFound(c => c.text('404 Not found'))
 
 app.get('/', c => c.text('Hello, Hono!'))
 
-// app.route('/users', user).route('/posts', post)
-
-app.onError((err, c) => {
-  console.error(err)
-  return c.json({ message: err.message }, 500)
-})
+app
+  .onError((err, c) => {
+    console.error(err)
+    return c.json({ message: err.message }, 500)
+  })
+  .route('/users', users)
+  .route('/auth', auth)
 
 const PORT = process.env.PORT || 3000
 
