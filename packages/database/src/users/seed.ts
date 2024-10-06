@@ -3,19 +3,22 @@ import prisma from '@/index'
 import { AuthSeed } from '@/users/auth'
 import { UserSeed } from '@/users/user'
 
-AuthSeed()
-  .catch(e => {
+export async function handleAuthSeed() {
+  try {
+    await AuthSeed()
+  } catch (e) {
     console.error(e)
-  })
-  .finally(async () => {
+  } finally {
     await prisma.$disconnect()
-  })
+  }
+}
 
-
-UserSeed()
-  .catch(e => {
+export async function handleUserSeed() {
+  try {
+    await UserSeed()
+  } catch (e) {
     console.error(e)
-  })
-  .finally(async () => {
+  } finally {
     await prisma.$disconnect()
-  })
+  }
+}
