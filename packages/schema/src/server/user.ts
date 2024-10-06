@@ -1,27 +1,25 @@
 import z from 'zod'
 
-export const UserRequest = z.object({
+export const CreateUserRequest = z.object({
   uid: z.string().uuid(),
   userName: z.string(),
-  profile: z.string().optional(),
-  avatarUrl: z.string().optional(),
+  profile: z.string().nullable(),
+  avatarUrl: z.string().nullable(),
   userTypeId: z.number(),
-  invitedTicket: z.number().default(0),
-  invitedToken: z.string().optional(),
-  githubUrl: z.string().optional(),
+  githubUrl: z.string().nullable(),
 })
 
-export type UserRequest = z.infer<typeof UserRequest>
+export type CreateUserRequest = z.infer<typeof CreateUserRequest>
 
 export const UserResponse = z.object({
   uid: z.string().uuid(),
   userName: z.string(),
-  profile: z.string().optional(),
-  avatarUrl: z.string().optional(),
+  profile: z.string().nullable(),
+  avatarUrl: z.string().nullable(),
   userTypeId: z.number(),
   invitedTicket: z.number().default(0),
-  invitedToken: z.string().optional(),
-  githubUrl: z.string().optional(),
+  invitedToken: z.string().nullable(),
+  githubUrl: z.string().nullable(),
 })
 
 export type UserResponse = z.infer<typeof UserResponse>

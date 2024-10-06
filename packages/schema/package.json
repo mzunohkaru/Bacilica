@@ -2,9 +2,9 @@
   "name": "@repo/schema",
   "version": "1.0.0",
   "private": true,
-  "types": "./src/index.ts",
   "exports": {
-    ".": "./src/index.ts"
+    "./server": "./src/server/index.ts",
+    "./DTO": "./src/DTO/index.ts"
   },
   "scripts": {
     "check": "biome check ./src",
