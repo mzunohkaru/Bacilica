@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Home() {
+const Home = () => {
   return (
     <div className='flex justify-center items-center h-screen text-5xl'>
       Home Screen

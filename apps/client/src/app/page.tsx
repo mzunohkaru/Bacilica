@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from 'react'
 import Modal from '@/components/initial/Modal'
 import { leckerli } from './fonts/googleFonts'
 
-export default function Home() {
+const Initial: React.FC = () => {
   const { userData, fetchUser, isMutating, error, createUserData, createUser } =
     useUser();
   const [isShow, setIsShow] = useState(false);
@@ -104,3 +104,5 @@ export default function Home() {
       </div>
   )
 }
+
+export default Initial;

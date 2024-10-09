@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Companies() {
+const Companies = () => {
   return (
     <div className='flex justify-center items-center h-screen text-5xl'>
       Companies Screen
