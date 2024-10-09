@@ -13,6 +13,7 @@ export default function Home() {
     useUser();
   const [isShow, setIsShow] = useState(false);
   const [isLoginModalShow, setIsLoginModalShow] = useState(false);
+  const [isSignUpModalShow, setIsSignUpModalShow] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
   const handleFetchUser = () => {
@@ -24,6 +25,10 @@ export default function Home() {
     setIsLoginModalShow(!isLoginModalShow);
   }
 
+  const handleSignUpModal = () => {
+    setIsSignUpModalShow(!isSignUpModalShow);
+  }
+
   const handleCreateUser = () => {
     createUser()
     console.log('createUserData', createUserData)
@@ -32,6 +37,7 @@ export default function Home() {
   const handleModalClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
       setIsLoginModalShow(false);
+      setIsSignUpModalShow(false);
     }
   };
 
@@ -53,9 +59,14 @@ export default function Home() {
           <RightTriangle />
           {
             isLoginModalShow
-              ? <Modal ref={modalRef} onClose={() => setIsLoginModalShow(false)}/>
+            ? <Modal ref={modalRef} onClose={() => setIsLoginModalShow(false)} isLogin={true} />
               : <></>
-          }
+        }
+        {
+          isSignUpModalShow
+          ? <Modal ref={modalRef} onClose={() => setIsSignUpModalShow(false)} isLogin={false} />
+            : <></>
+        }
           <div className='flex flex-grow flex-col justify-center items-center z-10 text-[#A68139]'>
             <div className='text-3xl font-leckerli'>Catch Phrase</div>
             <div className='text-8xl font-leckerli'>Title</div>
@@ -86,7 +97,7 @@ export default function Home() {
           <section className='flex flex-row h-[10vh] justify-center w-full items-center z-10 text-4xl font-leckerli bg-black'>
             <button onClick={handleLoginModal} className='flex-grow'>log in</button>
             <div className='h-[70%] border border-white'></div>
-            <button className='flex-grow'>sign up</button>
+            <button onClick={handleSignUpModal} className='flex-grow'>sign up</button>
           </section>
         </main>
       </div>

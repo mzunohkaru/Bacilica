@@ -6,29 +6,30 @@ import { Button, ButtonPropType } from './Button';
 
 type ModalProps = {
   onClose: () => void;
+  isLogin: boolean
 }
 
 const madimiOne = Madimi_One({weight: '400', subsets: ['latin'] })
 
-const Modal = forwardRef<HTMLDivElement, ModalProps>(({ onClose }, ref) => {
+const Modal = forwardRef<HTMLDivElement, ModalProps>(({ onClose, isLogin }, ref) => {
   const buttonProps: ButtonPropType[] = [
     {
       imagePath: "/images/google-icon.png",
       alt: "google icon",
       serviceName: "google",
-      isLogin: true
+      isLogin: isLogin
     },
     {
       imagePath: '/images/github-icon.png',
       alt: 'github icon',
       serviceName: 'GitHub',
-      isLogin: true,
+      isLogin: isLogin,
     },
     {
       imagePath: '/images/X-icon.png',
       alt: 'X icon',
       serviceName: 'X',
-      isLogin: true,
+      isLogin: isLogin,
     },
   ];
   return (
