@@ -3,6 +3,7 @@ import React, { forwardRef } from 'react'
 import { XCircleIcon } from '@heroicons/react/24/solid'
 import {Madimi_One} from 'next/font/google'
 import { Button, ButtonPropType } from './Button';
+import { useRouter } from 'next/navigation';
 
 type ModalProps = {
   onClose: () => void;
@@ -12,24 +13,29 @@ type ModalProps = {
 const madimiOne = Madimi_One({weight: '400', subsets: ['latin'] })
 
 const Modal = forwardRef<HTMLDivElement, ModalProps>(({ onClose, isLogin }, ref) => {
+  const router = useRouter();
+  // TODO use function to connect with another service #16
   const buttonProps: ButtonPropType[] = [
     {
       imagePath: "/images/google-icon.png",
       alt: "google icon",
       serviceName: "google",
-      isLogin: isLogin
+      isLogin: isLogin,
+      handleAuth: () => {router.push("/home")}
     },
     {
       imagePath: '/images/github-icon.png',
       alt: 'github icon',
       serviceName: 'GitHub',
       isLogin: isLogin,
+      handleAuth: () => {router.push("/home")}
     },
     {
       imagePath: '/images/X-icon.png',
       alt: 'X icon',
       serviceName: 'X',
       isLogin: isLogin,
+      handleAuth: () => {router.push("/home")}
     },
   ];
   return (
