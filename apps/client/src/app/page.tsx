@@ -7,6 +7,7 @@ import LeftTriangle from '@/components/initial/LeftTriangle'
 import RightTriangle from '@/components/initial/RightTriangle'
 import { useEffect, useRef, useState } from 'react'
 import Modal from '@/components/initial/Modal'
+import { leckerli } from './fonts/googleFonts'
 
 export default function Home() {
   const { userData, fetchUser, isMutating, error, createUserData, createUser } =
@@ -68,8 +69,8 @@ export default function Home() {
             : <></>
         }
           <div className='flex flex-grow flex-col justify-center items-center z-10 text-[#A68139]'>
-            <div className='text-3xl font-leckerli'>Catch Phrase</div>
-            <div className='text-8xl font-leckerli'>Title</div>
+            <div className={`text-3xl ${leckerli.className}`}>Catch Phrase</div>
+            <div className={`text-8xl ${leckerli.className}`}>Title</div>
           </div>
         <div className='flex flex-col items-center z-10'>
           {/* API calling example */}
@@ -94,7 +95,7 @@ export default function Home() {
             <button onClick={() => {setIsShow(!isShow)}}>show API function</button>
           </div>
           {/*----------------------*/}
-          <section className='flex flex-row h-[10vh] justify-center w-full items-center z-10 text-4xl font-leckerli bg-black'>
+          <section className={`flex flex-row h-[10vh] justify-center w-full items-center z-10 text-4xl font-leckerli bg-black ${leckerli.className}`}>
             <button onClick={handleLoginModal} className='flex-grow'>log in</button>
             <div className='h-[70%] border border-white'></div>
             <button onClick={handleSignUpModal} className='flex-grow'>sign up</button>

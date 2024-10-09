@@ -1,16 +1,14 @@
 import Image from 'next/image';
 import React, { forwardRef } from 'react'
 import { XCircleIcon } from '@heroicons/react/24/solid'
-import {Madimi_One} from 'next/font/google'
 import { Button, ButtonPropType } from './Button';
 import { useRouter } from 'next/navigation';
+import { madimiOne } from '@/app/fonts/googleFonts';
 
 type ModalProps = {
   onClose: () => void;
   isLogin: boolean
 }
-
-const madimiOne = Madimi_One({weight: '400', subsets: ['latin'] })
 
 const Modal = forwardRef<HTMLDivElement, ModalProps>(({ onClose, isLogin }, ref) => {
   const router = useRouter();
