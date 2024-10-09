@@ -9,10 +9,56 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    String @id @default(cuid())
-  email String @unique
-  name  String
+model Auth {
+  uid          String    @id @default(uuid()) @db.Uuid
+  email        String    @unique
+  password     String
+  provider     String
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+  lastSignInAt DateTime? @map("last_sign_in_at") @db.Timestamptz(3)
+
+  users Users[]
+
+  @@map("auth")
+}
+
+model Users {
+  uid           String    @id @db.Uuid
+  auth          Auth      @relation(fields: [uid], references: [uid])
+  userName      String    @map("user_name")
+  profile       String?
+  avatarUrl     String?   @map("avatar_url")
+  userTypeId    Int       @map("user_type_id")
+  invitedTicket Int       @default(0) @map("invited_ticket")
+  invitedToken  String?   @map("invited_token")
+  githubUrl     String?   @map("github_url")
+
+  following Follows[] @relation("following")
+  followers Follows[] @relation("followers")
+
+  blockers  Blocks[] @relation("blockers")
+  blockings Blocks[] @relation("blockings")
 
   @@map("users")
+}
+
+model Follows {
+  follower     Users  @relation("followers", fields: [followerUid], references: [uid])
+  followerUid  String @map("follower_uid") @db.Uuid
+  following    Users  @relation("following", fields: [followingUid], references: [uid])
+  followingUid String @map("following_uid") @db.Uuid
+
+  @@id([followerUid, followingUid])
+  @@map("follows")
+}
+
+model Blocks {
+  blocker     Users  @relation("blockers", fields: [blockerUid], references: [uid])
+  blockerUid  String @map("blocker_uid") @db.Uuid
+  blocking    Users  @relation("blockings", fields: [blockingUid], references: [uid])
+  blockingUid String @map("blocking_uid") @db.Uuid
+
+  @@id([blockerUid, blockingUid])
+  @@map("blocks")
 }

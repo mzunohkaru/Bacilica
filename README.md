@@ -24,7 +24,7 @@
 
 4. コードの生成とサンプルデータの投入:
    ```
-   pnpm generate
+   pnpm db:generate
    pnpm db:seed
    ```
 
@@ -65,4 +65,12 @@ pnpm docker:dev
 ### データベースのDockerコンテナ起動:
 ```
 pnpm docker:db
+```
+
+### 最新のリポジトリを取り込む
+```
+git checkout develop
+git fetch --prune && git pull
+git checkout feature/XXX
+git rebase -i origin/develop
 ```
