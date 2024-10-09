@@ -6,9 +6,6 @@ export default {
   ],
 	theme: {
 		extend: {
-			fontFamily: {
-        'leckerli': ['"Leckerli One"', 'cursive'],
-      },
 			backgroundImage: theme => ({
 				'gradient-initial-left-triangle':
 					'linear-gradient(150deg, #C69434, #000000)',

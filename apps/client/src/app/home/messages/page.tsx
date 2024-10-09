@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Messages() {
+const Messages = () => {
   return (
     <div className='flex justify-center items-center h-screen text-5xl'>
       Messages Screen

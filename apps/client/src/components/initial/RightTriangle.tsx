@@ -1,6 +1,6 @@
 import React from 'react'
 
-function RightTriangle() {
+const RightTriangle = () => {
   return (
     <div className='absolute -bottom-20 right-0 z-0'>
       <div>
