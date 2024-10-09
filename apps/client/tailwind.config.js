@@ -7,7 +7,8 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-        'leckerli': ['"Leckerli One"', 'cursive'],
+				'leckerli': ['"Leckerli One"', 'cursive'],
+				'madimi': ['"Mada One"', 'sans-serif'],
       },
 			backgroundImage: theme => ({
 				'gradient-initial-left-triangle':

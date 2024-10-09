@@ -26,7 +26,9 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <head>
-        <link href="https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap" rel="stylesheet"/>
+        {/* TODO delete and use next/font/google */}
+        <link href="https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Mada+One&display=swap" rel="stylesheet" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
