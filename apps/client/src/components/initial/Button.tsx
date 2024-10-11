@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image';
-import { Madimi_One } from 'next/font/google'
+import { madimiOne } from '@/app/fonts/googleFonts';
 
 export type ButtonPropType = {
   imagePath: string;
@@ -10,7 +10,6 @@ export type ButtonPropType = {
   handleAuth: () => void;
 }
 
-const madimiOne = Madimi_One({weight: '400', subsets: ['latin'] })
 
 export const Button = (props: ButtonPropType) => {
   return (
