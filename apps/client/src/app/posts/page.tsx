@@ -1,5 +1,5 @@
 import Layout from '@/components/layout/layout'
-import Post from '@/components/posts/post'
+import Post, { PostPropsType } from '@/components/posts/post'
 import React from 'react'
 import { madimiOne } from '../fonts/googleFonts'
 
@@ -8,6 +8,96 @@ const Posts = () => {
     "React",
     "Next.js",
     "Go"
+  ]
+  const postList: PostPropsType[] = [
+    {
+      thumbnailPath: "/images/post-img.jpeg",
+      iconPath: "/images/komikado-icon.png",
+      title: "美しいアバターの作り方",
+      content: "AIによる要約",
+      tags:[
+        "JavaScript",
+        "React",
+        "Design"
+      ]
+    },
+    {
+      thumbnailPath: "/images/post-img.jpeg",
+      iconPath: "/images/komikado-icon.png",
+      title: "美しいアバターの作り方",
+      content: "AIによる要約",
+      tags:[
+        "JavaScript",
+        "React",
+        "Design"
+      ]
+    },
+    {
+      thumbnailPath: "/images/post-img.jpeg",
+      iconPath: "/images/komikado-icon.png",
+      title: "美しいアバターの作り方",
+      content: "AIによる要約",
+      tags:[
+        "JavaScript",
+        "React",
+        "Design"
+      ]
+    },
+    {
+      thumbnailPath: "/images/post-img.jpeg",
+      iconPath: "/images/komikado-icon.png",
+      title: "美しいアバターの作り方",
+      content: "AIによる要約",
+      tags:[
+        "JavaScript",
+        "React",
+        "Design"
+      ]
+    },
+    {
+      thumbnailPath: "/images/post-img.jpeg",
+      iconPath: "/images/komikado-icon.png",
+      title: "美しいアバターの作り方",
+      content: "AIによる要約",
+      tags:[
+        "JavaScript",
+        "React",
+        "Design"
+      ]
+    },
+    {
+      thumbnailPath: "/images/post-img.jpeg",
+      iconPath: "/images/komikado-icon.png",
+      title: "美しいアバターの作り方",
+      content: "AIによる要約",
+      tags:[
+        "JavaScript",
+        "React",
+        "Design"
+      ]
+    },
+    {
+      thumbnailPath: "/images/post-img.jpeg",
+      iconPath: "/images/komikado-icon.png",
+      title: "美しいアバターの作り方",
+      content: "AIによる要約",
+      tags:[
+        "JavaScript",
+        "React",
+        "Design"
+      ]
+    },
+    {
+      thumbnailPath: "/images/post-img.jpeg",
+      iconPath: "/images/komikado-icon.png",
+      title: "美しいアバターの作り方",
+      content: "AIによる要約",
+      tags:[
+        "JavaScript",
+        "React",
+        "Design"
+      ]
+    },
   ]
   return (
     <Layout>
@@ -29,13 +119,10 @@ const Posts = () => {
             <div>hot</div>
           </div>
         </section>
-        {/* Delete h-[200vh] */}
-        <section className='posts-section h-[200vh] grid grid-cols-2'>
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
+        <section className='posts-section grid grid-cols-2 gap-x-8 gap-y-2'>
+          {postList.map((post, index) => (
+            <Post key={index} {...post} />
+          ))}
         </section>
       </div>
     </Layout>
