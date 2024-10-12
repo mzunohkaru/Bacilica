@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Post() {
+const Post = () => {
   return (
     <div className='flex justify-center items-center h-screen text-5xl'>
       Post Screen

@@ -1,6 +1,6 @@
 import React from 'react'
 
-function LeftTriangle() {
+const LeftTriangle: React.FC = () => {
   return (
     <div className='absolute -top-20 left-0 z-0'>
       <div>
@@ -13,4 +13,4 @@ function LeftTriangle() {
   )
 }
 
-export default LeftTriangle
+export default LeftTriangle;

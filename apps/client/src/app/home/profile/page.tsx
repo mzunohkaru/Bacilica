@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Profile() {
+const Profile = () => {
   return (
     <div className='flex justify-center items-center h-screen text-5xl'>
       Profile Screen
