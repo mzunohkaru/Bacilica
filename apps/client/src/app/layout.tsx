@@ -28,8 +28,9 @@ export default function RootLayout({
       <head>
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased overscroll-none overflow-x-hidden`}
       >
+      <script src="https://cdn.tailwindcss.com"></script>
         {children}
       </body>
     </html>

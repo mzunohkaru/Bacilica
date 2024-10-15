@@ -19,21 +19,21 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(({ onClose, isLogin }, ref)
       alt: "google icon",
       serviceName: "google",
       isLogin: isLogin,
-      handleAuth: () => {router.push("/home")}
+      handleAuth: () => {router.push("/posts")}
     },
     {
       imagePath: '/images/github-icon.png',
       alt: 'github icon',
       serviceName: 'GitHub',
       isLogin: isLogin,
-      handleAuth: () => {router.push("/home")}
+      handleAuth: () => {router.push("/posts")}
     },
     {
       imagePath: '/images/X-icon.png',
       alt: 'X icon',
       serviceName: 'X',
       isLogin: isLogin,
-      handleAuth: () => {router.push("/home")}
+      handleAuth: () => {router.push("/posts")}
     },
   ];
   return (
