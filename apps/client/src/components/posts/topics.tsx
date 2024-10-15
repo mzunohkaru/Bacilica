@@ -39,7 +39,7 @@ const Topics = (props: { posts: TopicsPropType[] }) => {
   const rightSlideStyle: string[] = [`w-[${rightSlideRatio.frame}vw]`, `h-[${rightSlideRatio.frame}vh]`, `translate-x-[${rightSlideRatio.translateX}]`, `-translate-y-[${(leftSlideRatio.frame - centerSlideRatio.frame) / 2}vh]`];
   const leftElseSlideStyle: string[] = [`w-[${leftSlideRatio.frame}vw]`, `h-[${leftSlideRatio.frame}vh]`, "translate-x-[-100vw]", `-translate-y-[${(leftSlideRatio.frame - centerSlideRatio.frame) / 2}vh]`];
   const rightElseSlideStyle: string[] = [`w-[${leftSlideRatio.frame}vw]`, `h-[${leftSlideRatio.frame}vh]`, "translate-x-[100vw]", `-translate-y-[${(leftSlideRatio.frame - centerSlideRatio.frame) / 2}vh]`];
-  const focusedPointStyle: string[] = ["focus", "bg-black"];
+  const focusedPointStyle: string[] = ["focus", "bg-[#A60000]"];
   const normalPointStyle: string[] = ["bg-gray-500"];
   const getSlideStyle = (index: number): string[] => {
     if (index == 0)
@@ -134,10 +134,10 @@ const Topics = (props: { posts: TopicsPropType[] }) => {
       <div className='h-[70vh]'></div>
       <div className='m-3 flex flex-row justify-center items-center'>
         <button onClick={slideRight} className={`border-r-[length:--topics-arrow-size] border-r-white border-b-[length:--topics-arrow-size] border-b-transparent border-t-[length:--topics-arrow-size] border-t-transparent`}></button>
-        <div className='bg-[#BFBFBF70] space-x-2 rounded-3xl w-36 h-8 m-2 flex flex-row justify-center items-center'>
+        <div className='space-x-3 rounded-3xl w-36 h-5 m-2 flex flex-row justify-center items-center'>
           {
             Array.from({ length: 5 }).map((_, index) => (
-              <div key={index} className={`point h-4 w-4 rounded-full ${index == 1 ? focusedPointStyle.join(' ') : normalPointStyle.join(' ')}`}></div>
+              <div key={index} className={`point h-3 w-3 rounded-full ${index == 1 ? focusedPointStyle.join(' ') : normalPointStyle.join(' ')}`}></div>
             ))
           }
         </div>
