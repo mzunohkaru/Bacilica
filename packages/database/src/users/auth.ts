@@ -1,4 +1,4 @@
-import { AuthRequest } from '@repo/schema'
+import { AuthRequest } from '@repo/schema/server'
 
 import prisma from '@/index'
 import { TEST_USER_DATA } from '@/utils/contains'

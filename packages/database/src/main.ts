@@ -1,5 +1,15 @@
-import { handleAuthSeed, handleUserSeed } from '@/users/seed'
+import prisma from '@/index'
 
-handleAuthSeed()
+import { ProgrammingLanguageMasterSeed } from '@/post/post-category'
 
-handleUserSeed()
+export async function handleMasterSeed() {
+  try {
+    await ProgrammingLanguageMasterSeed()
+  } catch (e) {
+    console.error(e)
+  } finally {
+    await prisma.$disconnect()
+  }
+}
+
+handleMasterSeed()

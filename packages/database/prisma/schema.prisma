@@ -24,15 +24,16 @@ model Auth {
 }
 
 model Users {
-  uid           String    @id @db.Uuid
-  auth          Auth      @relation(fields: [uid], references: [uid])
-  userName      String    @map("user_name")
+  uid           String  @id @db.Uuid
+  userName      String  @map("user_name")
   profile       String?
-  avatarUrl     String?   @map("avatar_url")
-  userTypeId    Int       @map("user_type_id")
-  invitedTicket Int       @default(0) @map("invited_ticket")
-  invitedToken  String?   @map("invited_token")
-  githubUrl     String?   @map("github_url")
+  avatarUrl     String? @map("avatar_url")
+  userTypeId    Int     @map("user_type_id")
+  invitedTicket Int     @default(0) @map("invited_ticket")
+  invitedToken  String? @map("invited_token")
+  githubUrl     String? @map("github_url")
+
+  auth Auth @relation(fields: [uid], references: [uid])
 
   following Follows[] @relation("following")
   followers Follows[] @relation("followers")
@@ -40,25 +41,146 @@ model Users {
   blockers  Blocks[] @relation("blockers")
   blockings Blocks[] @relation("blockings")
 
+  likes    Likes[]
+  comments Comments[]
+  posts    EngineerPosts[]
+  saves    Saves[]
+
   @@map("users")
 }
 
 model Follows {
-  follower     Users  @relation("followers", fields: [followerUid], references: [uid])
   followerUid  String @map("follower_uid") @db.Uuid
-  following    Users  @relation("following", fields: [followingUid], references: [uid])
   followingUid String @map("following_uid") @db.Uuid
 
-  @@id([followerUid, followingUid])
+  follower  Users @relation("followers", fields: [followerUid], references: [uid], onDelete: Cascade)
+  following Users @relation("following", fields: [followingUid], references: [uid], onDelete: Cascade)
+
+  @@id(fields: [followerUid, followingUid], map: "idx_follows_follower_uid_following_uid")
   @@map("follows")
 }
 
 model Blocks {
-  blocker     Users  @relation("blockers", fields: [blockerUid], references: [uid])
   blockerUid  String @map("blocker_uid") @db.Uuid
-  blocking    Users  @relation("blockings", fields: [blockingUid], references: [uid])
   blockingUid String @map("blocking_uid") @db.Uuid
 
-  @@id([blockerUid, blockingUid])
+  blocker  Users @relation("blockers", fields: [blockerUid], references: [uid], onDelete: Cascade)
+  blocking Users @relation("blockings", fields: [blockingUid], references: [uid], onDelete: Cascade)
+
+  @@id(fields: [blockerUid, blockingUid], map: "idx_blocks_blocker_uid_blocking_uid")
   @@map("blocks")
+}
+
+model EngineerPosts {
+  id             Int      @id @default(autoincrement())
+  uid            String?  @db.Uuid
+  title          String
+  description    String
+  likeCount      Int      @default(0) @map("like_count")
+  displayCount   Int      @default(0) @map("display_count")
+  commentCount   Int      @default(0) @map("comment_count")
+  algorithmPoint Int      @default(0) @map("algorithm_point")
+  githubUrl      String?  @map("github_url")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  user Users? @relation(fields: [uid], references: [uid], onDelete: SetNull)
+
+  postProgrammingLanguages PostProgrammingLanguages[]
+  postStructure            PostStructure[]
+  likes                    Likes[]
+  comments                 Comments[]
+  saves                    Saves[]
+
+  @@map("engineer_posts")
+}
+
+model PostProgrammingLanguages {
+  postId                Int @id @map("post_id")
+  programmingLanguageId Int @map("programming_language_id")
+
+  post                EngineerPosts        @relation(fields: [postId], references: [id], onDelete: Cascade)
+  programmingLanguage ProgrammingLanguages @relation(fields: [programmingLanguageId], references: [id], onDelete: Cascade)
+
+  @@index(fields: [postId], map: "idx_post_programming_languages_post_id")
+  @@map("post_programming_languages")
+}
+
+model ProgrammingLanguages {
+  id                  Int    @id @default(autoincrement())
+  programmingLanguage String @unique(map: "uq_programming_languages_programming_language") @map("programming_language")
+
+  postProgrammingLanguages PostProgrammingLanguages[]
+
+  @@map("programming_languages")
+}
+
+model PostStructure {
+  postId     Int    @map("post_id")
+  postType   String @map("post_type")
+  postTypeId Int    @map("post_type_id")
+  order      Int
+
+  post EngineerPosts @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@id(fields: [postId, order], map: "idx_post_structure_post_id_order")
+  @@map("post_structure")
+}
+
+model PostContents {
+  id      Int     @id @default(autoincrement())
+
+  header  String?
+  content String?
+
+  @@map("post_contents")
+}
+
+model PostImages {
+  id       Int    @id @default(autoincrement())
+  imageUrl String[] @unique(map: "uq_images_image_url") @map("image_url")
+
+  @@map("post_images")
+}
+
+model PostVideos {
+  id       Int    @id @default(autoincrement())
+  videoUrl String @unique(map: "uq_videos_video_url") @map("video_url")
+
+  @@map("post_videos")
+}
+
+model Comments {
+  id        Int      @id @default(autoincrement())
+  postId    Int      @map("post_id")
+  senderUid String?  @map("sender_uid") @db.Uuid
+  comment   String
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  post EngineerPosts @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user Users?        @relation(fields: [senderUid], references: [uid], onDelete: SetNull)
+
+  @@index(fields: [senderUid, postId], map: "idx_comments_sender_uid_post_id")
+  @@map("comments")
+}
+
+model Saves {
+  saverUid String @map("saver_uid") @db.Uuid
+  postId   Int    @map("post_id")
+
+  user Users         @relation(fields: [saverUid], references: [uid], onDelete: Cascade)
+  post EngineerPosts @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@id(fields: [saverUid, postId], map: "idx_saves_saver_uid_post_id")
+  @@map("saves")
+}
+
+model Likes {
+  likerUid String @map("liker_uid") @db.Uuid
+  postId   Int    @map("post_id")
+
+  user Users         @relation(fields: [likerUid], references: [uid], onDelete: Cascade)
+  post EngineerPosts @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@id(fields: [likerUid, postId], map: "idx_likes_liker_uid_post_id")
+  @@map("likes")
 }
