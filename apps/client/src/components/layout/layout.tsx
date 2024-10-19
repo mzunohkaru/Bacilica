@@ -1,8 +1,12 @@
+'use client'
+
 import Subject, { SubjectPropType } from '@/components/layout/subject'
 import React from 'react'
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const router = useRouter();
   const subjectList: SubjectPropType[] = [
     {
       title: "Posts",
@@ -46,6 +50,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             alt="icon"
             layout='fill'
             className='rounded-full'
+            onClick={() => {router.push("/profile")}}
           />
         </div>
       </div>
