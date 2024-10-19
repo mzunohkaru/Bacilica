@@ -6,6 +6,8 @@ export const CreateUserRequest = z.object({
   profile: z.string().nullable(),
   avatarUrl: z.string().nullable(),
   userTypeId: z.number(),
+  invitedTicket: z.number().default(0),
+  invitedToken: z.string().nullable(),
   githubUrl: z.string().nullable(),
 })
 

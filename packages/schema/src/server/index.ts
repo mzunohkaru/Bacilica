@@ -1,3 +1,5 @@
 export * from './user'
 export * from './auth'
 export * from './follow'
+export * from './post'
+export * from './post-structure'
