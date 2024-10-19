@@ -1,4 +1,4 @@
-import { UserRequest } from '@repo/schema'
+import { CreateUserRequest } from '@repo/schema/server'
 
 import prisma from '@/index'
 import { TEST_USER_DATA, UserType } from '@/utils/contains'
@@ -20,7 +20,7 @@ export async function UserSeed() {
   const userType = 'SENIOR'
   const userTypeId = UserType[userType as keyof typeof UserType]
 
-  const userData: UserRequest = {
+  const userData: CreateUserRequest = {
     uid: testUserUid.uid,
     userName: '山田太郎',
     profile: '山田です！よろしくお願いいたします。',
