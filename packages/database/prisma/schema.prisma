@@ -26,7 +26,6 @@ model Auth {
 model Users {
   uid           String  @id @db.Uuid
   userName      String  @map("user_name")
-  profile       String?
   avatarUrl     String? @map("avatar_url")
   userTypeId    Int     @map("user_type_id")
   invitedTicket Int     @default(0) @map("invited_ticket")
@@ -75,7 +74,7 @@ model EngineerPosts {
   id             Int      @id @default(autoincrement())
   uid            String?  @db.Uuid
   title          String
-  description    String
+  description    String?
   likeCount      Int      @default(0) @map("like_count")
   displayCount   Int      @default(0) @map("display_count")
   commentCount   Int      @default(0) @map("comment_count")
@@ -101,7 +100,6 @@ model PostProgrammingLanguages {
   post                EngineerPosts        @relation(fields: [postId], references: [id], onDelete: Cascade)
   programmingLanguage ProgrammingLanguages @relation(fields: [programmingLanguageId], references: [id], onDelete: Cascade)
 
-  @@index(fields: [postId], map: "idx_post_programming_languages_post_id")
   @@map("post_programming_languages")
 }
 
@@ -122,7 +120,7 @@ model PostStructure {
 
   post EngineerPosts @relation(fields: [postId], references: [id], onDelete: Cascade)
 
-  @@id(fields: [postId, order], map: "idx_post_structure_post_id_order")
+  @@id(fields: [postId], map: "idx_post_structure_post_id")
   @@map("post_structure")
 }
 
@@ -137,7 +135,7 @@ model PostContents {
 
 model PostImages {
   id       Int    @id @default(autoincrement())
-  imageUrl String[] @unique(map: "uq_images_image_url") @map("image_url")
+  imageUrls String[] @unique(map: "uq_images_image_urls") @map("image_urls")
 
   @@map("post_images")
 }

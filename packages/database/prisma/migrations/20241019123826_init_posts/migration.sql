@@ -1,3 +1,9 @@
+/*
+  Warnings:
+
+  - You are about to drop the column `profile` on the `users` table. All the data in the column will be lost.
+
+*/
 -- DropForeignKey
 ALTER TABLE "blocks" DROP CONSTRAINT "blocks_blocker_uid_fkey";
 
@@ -16,12 +22,15 @@ ALTER TABLE "blocks" RENAME CONSTRAINT "blocks_pkey" TO "idx_blocks_blocker_uid_
 -- AlterTable
 ALTER TABLE "follows" RENAME CONSTRAINT "follows_pkey" TO "idx_follows_follower_uid_following_uid";
 
+-- AlterTable
+ALTER TABLE "users" DROP COLUMN "profile";
+
 -- CreateTable
 CREATE TABLE "engineer_posts" (
     "id" SERIAL NOT NULL,
     "uid" UUID,
     "title" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
+    "description" TEXT,
     "like_count" INTEGER NOT NULL DEFAULT 0,
     "display_count" INTEGER NOT NULL DEFAULT 0,
     "comment_count" INTEGER NOT NULL DEFAULT 0,
@@ -55,7 +64,7 @@ CREATE TABLE "post_structure" (
     "post_type_id" INTEGER NOT NULL,
     "order" INTEGER NOT NULL,
 
-    CONSTRAINT "idx_post_structure_post_id_order" PRIMARY KEY ("post_id","order")
+    CONSTRAINT "idx_post_structure_post_id" PRIMARY KEY ("post_id")
 );
 
 -- CreateTable
@@ -70,7 +79,7 @@ CREATE TABLE "post_contents" (
 -- CreateTable
 CREATE TABLE "post_images" (
     "id" SERIAL NOT NULL,
-    "image_url" TEXT[],
+    "image_urls" TEXT[],
 
     CONSTRAINT "post_images_pkey" PRIMARY KEY ("id")
 );
@@ -111,13 +120,10 @@ CREATE TABLE "likes" (
 );
 
 -- CreateIndex
-CREATE INDEX "idx_post_programming_languages_post_id" ON "post_programming_languages"("post_id");
-
--- CreateIndex
 CREATE UNIQUE INDEX "uq_programming_languages_programming_language" ON "programming_languages"("programming_language");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "uq_images_image_url" ON "post_images"("image_url");
+CREATE UNIQUE INDEX "uq_images_image_urls" ON "post_images"("image_urls");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "uq_videos_video_url" ON "post_videos"("video_url");
