@@ -77,3 +77,8 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.pink-triangle {
+  @apply relative w-48 h-16 bg-gradient-to-b from-[#BA0000] to-[#FF6DC5];
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}

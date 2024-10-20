@@ -1,8 +1,12 @@
+'use client'
+
 import Subject, { SubjectPropType } from '@/components/layout/subject'
 import React from 'react'
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const router = useRouter();
   const subjectList: SubjectPropType[] = [
     {
       title: "Posts",
@@ -40,14 +44,15 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             ))
           }
         </div>
-        <div className='w-[70px] h-[70px] relative mx-4'>
+        <button className='w-[70px] h-[70px] relative mx-4'>
           <Image
             src="/images/komikado.webp"
             alt="icon"
             layout='fill'
-            className='rounded-full'
+            className='rounded-full cursor-pointer'
+            onClick={() => {router.push("/profile")}}
           />
-        </div>
+        </button>
       </div>
       <div className='flex justify-start items-start h-full w-full text-5xl text-white'>{children}</div>
     </main>
