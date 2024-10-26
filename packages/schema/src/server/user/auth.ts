@@ -8,7 +8,7 @@ export const AuthRequest = z.object({
     z.literal('Github'),
     z.literal('Google'),
   ]),
-  lastSignInAt: z.date(),
+  lastSignInAt: z.date().nullish(),
 })
 
 export type AuthRequest = z.infer<typeof AuthRequest>
@@ -19,7 +19,7 @@ export const AuthResponse = z.object({
   provider: z.string(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  lastSignInAt: z.date().nullable(),
+  lastSignInAt: z.date().nullish(),
 })
 
 export type AuthResponse = z.infer<typeof AuthResponse>
