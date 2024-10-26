@@ -1,32 +1,47 @@
-/*
-  Warnings:
+-- CreateTable
+CREATE TABLE "auth" (
+    "uid" UUID NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "provider" TEXT NOT NULL,
+    "created_at" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ(3) NOT NULL,
+    "last_sign_in_at" TIMESTAMPTZ(3),
 
-  - You are about to drop the column `profile` on the `users` table. All the data in the column will be lost.
-
-*/
--- DropForeignKey
-ALTER TABLE "blocks" DROP CONSTRAINT "blocks_blocker_uid_fkey";
-
--- DropForeignKey
-ALTER TABLE "blocks" DROP CONSTRAINT "blocks_blocking_uid_fkey";
-
--- DropForeignKey
-ALTER TABLE "follows" DROP CONSTRAINT "follows_follower_uid_fkey";
-
--- DropForeignKey
-ALTER TABLE "follows" DROP CONSTRAINT "follows_following_uid_fkey";
-
--- AlterTable
-ALTER TABLE "blocks" RENAME CONSTRAINT "blocks_pkey" TO "idx_blocks_blocker_uid_blocking_uid";
-
--- AlterTable
-ALTER TABLE "follows" RENAME CONSTRAINT "follows_pkey" TO "idx_follows_follower_uid_following_uid";
-
--- AlterTable
-ALTER TABLE "users" DROP COLUMN "profile";
+    CONSTRAINT "auth_pkey" PRIMARY KEY ("uid")
+);
 
 -- CreateTable
-CREATE TABLE "engineer_posts" (
+CREATE TABLE "users" (
+    "uid" UUID NOT NULL,
+    "user_name" TEXT NOT NULL,
+    "avatar_url" TEXT,
+    "user_type_id" INTEGER NOT NULL,
+    "invited_ticket" INTEGER NOT NULL DEFAULT 0,
+    "invited_token" TEXT,
+    "github_url" TEXT,
+
+    CONSTRAINT "users_pkey" PRIMARY KEY ("uid")
+);
+
+-- CreateTable
+CREATE TABLE "follows" (
+    "follower_uid" UUID NOT NULL,
+    "following_uid" UUID NOT NULL,
+
+    CONSTRAINT "idx_follows_follower_uid_following_uid" PRIMARY KEY ("follower_uid","following_uid")
+);
+
+-- CreateTable
+CREATE TABLE "blocks" (
+    "blocker_uid" UUID NOT NULL,
+    "blocking_uid" UUID NOT NULL,
+
+    CONSTRAINT "idx_blocks_blocker_uid_blocking_uid" PRIMARY KEY ("blocker_uid","blocking_uid")
+);
+
+-- CreateTable
+CREATE TABLE "posts" (
     "id" SERIAL NOT NULL,
     "uid" UUID,
     "title" TEXT NOT NULL,
@@ -38,15 +53,13 @@ CREATE TABLE "engineer_posts" (
     "github_url" TEXT,
     "created_at" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "engineer_posts_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "posts_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "post_programming_languages" (
     "post_id" INTEGER NOT NULL,
-    "programming_language_id" INTEGER NOT NULL,
-
-    CONSTRAINT "post_programming_languages_pkey" PRIMARY KEY ("post_id")
+    "programming_language_id" INTEGER NOT NULL
 );
 
 -- CreateTable
@@ -64,7 +77,7 @@ CREATE TABLE "post_structure" (
     "post_type_id" INTEGER NOT NULL,
     "order" INTEGER NOT NULL,
 
-    CONSTRAINT "idx_post_structure_post_id" PRIMARY KEY ("post_id")
+    CONSTRAINT "idx_post_structure_post_id_order" PRIMARY KEY ("post_id","order")
 );
 
 -- CreateTable
@@ -120,6 +133,12 @@ CREATE TABLE "likes" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "auth_email_key" ON "auth"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "uq_post_programming_languages_post_id_programming_language_id" ON "post_programming_languages"("post_id", "programming_language_id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "uq_programming_languages_programming_language" ON "programming_languages"("programming_language");
 
 -- CreateIndex
@@ -130,6 +149,9 @@ CREATE UNIQUE INDEX "uq_videos_video_url" ON "post_videos"("video_url");
 
 -- CreateIndex
 CREATE INDEX "idx_comments_sender_uid_post_id" ON "comments"("sender_uid", "post_id");
+
+-- AddForeignKey
+ALTER TABLE "users" ADD CONSTRAINT "users_uid_fkey" FOREIGN KEY ("uid") REFERENCES "auth"("uid") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "follows" ADD CONSTRAINT "follows_follower_uid_fkey" FOREIGN KEY ("follower_uid") REFERENCES "users"("uid") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -144,19 +166,19 @@ ALTER TABLE "blocks" ADD CONSTRAINT "blocks_blocker_uid_fkey" FOREIGN KEY ("bloc
 ALTER TABLE "blocks" ADD CONSTRAINT "blocks_blocking_uid_fkey" FOREIGN KEY ("blocking_uid") REFERENCES "users"("uid") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "engineer_posts" ADD CONSTRAINT "engineer_posts_uid_fkey" FOREIGN KEY ("uid") REFERENCES "users"("uid") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "posts" ADD CONSTRAINT "posts_uid_fkey" FOREIGN KEY ("uid") REFERENCES "users"("uid") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "post_programming_languages" ADD CONSTRAINT "post_programming_languages_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "engineer_posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "post_programming_languages" ADD CONSTRAINT "post_programming_languages_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "post_programming_languages" ADD CONSTRAINT "post_programming_languages_programming_language_id_fkey" FOREIGN KEY ("programming_language_id") REFERENCES "programming_languages"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "post_structure" ADD CONSTRAINT "post_structure_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "engineer_posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "post_structure" ADD CONSTRAINT "post_structure_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "comments" ADD CONSTRAINT "comments_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "engineer_posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "comments" ADD CONSTRAINT "comments_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "comments" ADD CONSTRAINT "comments_sender_uid_fkey" FOREIGN KEY ("sender_uid") REFERENCES "users"("uid") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -165,10 +187,10 @@ ALTER TABLE "comments" ADD CONSTRAINT "comments_sender_uid_fkey" FOREIGN KEY ("s
 ALTER TABLE "saves" ADD CONSTRAINT "saves_saver_uid_fkey" FOREIGN KEY ("saver_uid") REFERENCES "users"("uid") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "saves" ADD CONSTRAINT "saves_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "engineer_posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "saves" ADD CONSTRAINT "saves_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "likes" ADD CONSTRAINT "likes_liker_uid_fkey" FOREIGN KEY ("liker_uid") REFERENCES "users"("uid") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "likes" ADD CONSTRAINT "likes_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "engineer_posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "likes" ADD CONSTRAINT "likes_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;

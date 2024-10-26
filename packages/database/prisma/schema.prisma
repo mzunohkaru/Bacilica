@@ -42,7 +42,7 @@ model Users {
 
   likes    Likes[]
   comments Comments[]
-  posts    EngineerPosts[]
+  posts    Posts[]
   saves    Saves[]
 
   @@map("users")
@@ -70,7 +70,7 @@ model Blocks {
   @@map("blocks")
 }
 
-model EngineerPosts {
+model Posts {
   id             Int      @id @default(autoincrement())
   uid            String?  @db.Uuid
   title          String
@@ -90,16 +90,17 @@ model EngineerPosts {
   comments                 Comments[]
   saves                    Saves[]
 
-  @@map("engineer_posts")
+  @@map("posts")
 }
 
 model PostProgrammingLanguages {
-  postId                Int @id @map("post_id")
+  postId                Int @map("post_id")
   programmingLanguageId Int @map("programming_language_id")
 
-  post                EngineerPosts        @relation(fields: [postId], references: [id], onDelete: Cascade)
+  post                Posts                @relation(fields: [postId], references: [id], onDelete: Cascade)
   programmingLanguage ProgrammingLanguages @relation(fields: [programmingLanguageId], references: [id], onDelete: Cascade)
 
+  @@unique(fields: [postId, programmingLanguageId], map: "uq_post_programming_languages_post_id_programming_language_id")
   @@map("post_programming_languages")
 }
 
@@ -118,15 +119,14 @@ model PostStructure {
   postTypeId Int    @map("post_type_id")
   order      Int
 
-  post EngineerPosts @relation(fields: [postId], references: [id], onDelete: Cascade)
+  post Posts @relation(fields: [postId], references: [id], onDelete: Cascade)
 
-  @@id(fields: [postId], map: "idx_post_structure_post_id")
+  @@id(fields: [postId, order], map: "idx_post_structure_post_id_order")
   @@map("post_structure")
 }
 
 model PostContents {
   id      Int     @id @default(autoincrement())
-
   header  String?
   content String?
 
@@ -134,7 +134,7 @@ model PostContents {
 }
 
 model PostImages {
-  id       Int    @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   imageUrls String[] @unique(map: "uq_images_image_urls") @map("image_urls")
 
   @@map("post_images")
@@ -154,8 +154,8 @@ model Comments {
   comment   String
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
 
-  post EngineerPosts @relation(fields: [postId], references: [id], onDelete: Cascade)
-  user Users?        @relation(fields: [senderUid], references: [uid], onDelete: SetNull)
+  post Posts  @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user Users? @relation(fields: [senderUid], references: [uid], onDelete: SetNull)
 
   @@index(fields: [senderUid, postId], map: "idx_comments_sender_uid_post_id")
   @@map("comments")
@@ -165,8 +165,8 @@ model Saves {
   saverUid String @map("saver_uid") @db.Uuid
   postId   Int    @map("post_id")
 
-  user Users         @relation(fields: [saverUid], references: [uid], onDelete: Cascade)
-  post EngineerPosts @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user Users @relation(fields: [saverUid], references: [uid], onDelete: Cascade)
+  post Posts @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@id(fields: [saverUid, postId], map: "idx_saves_saver_uid_post_id")
   @@map("saves")
@@ -176,8 +176,8 @@ model Likes {
   likerUid String @map("liker_uid") @db.Uuid
   postId   Int    @map("post_id")
 
-  user Users         @relation(fields: [likerUid], references: [uid], onDelete: Cascade)
-  post EngineerPosts @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user Users @relation(fields: [likerUid], references: [uid], onDelete: Cascade)
+  post Posts @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@id(fields: [likerUid, postId], map: "idx_likes_liker_uid_post_id")
   @@map("likes")
