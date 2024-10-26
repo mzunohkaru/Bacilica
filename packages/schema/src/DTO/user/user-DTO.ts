@@ -3,12 +3,11 @@ import z from 'zod'
 export const UserDTO = z.object({
   session: z.string().uuid(),
   userName: z.string(),
-  profile: z.string().optional(),
-  avatarUrl: z.string().optional(),
+  avatarUrl: z.string().nullish(),
   userTypeId: z.number(),
   invitedTicket: z.number().default(0),
-  invitedToken: z.string().optional(),
-  githubUrl: z.string().optional(),
+  invitedToken: z.string().nullish(),
+  githubUrl: z.string().nullish(),
 })
 
 export type UserDTO = z.infer<typeof UserDTO>

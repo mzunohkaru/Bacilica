@@ -1,3 +1,3 @@
-export * from './user-DTO'
-export * from './all-users-DTO'
-export * from './auth-DTO'
+export * from './user/user-DTO'
+export * from './user/all-users-DTO'
+export * from './user/auth-DTO'
