@@ -1,51 +1,57 @@
 import prisma from '@/index'
 
 import {
-  CreateEngineerPostContentRequest,
-  CreateEngineerPostImageRequest,
-  CreateEngineerPostStructureRequest,
-  CreateEngineerPostVideoRequest,
+  PostContentRequest,
+  PostImageRequest,
+  PostStructureRequest,
+  PostVideoRequest,
 } from '@repo/schema/server'
-import { TEST_UID, PostType } from '@/utils/contains'
+import {
+  TEST_UID,
+  POST_TYPE,
+} from '@/utils/contains'
 
-export async function EngineerPostSeed() {
+export async function PostSeed() {
   const engineerPostData = {
     title: 'テスト投稿',
     description: 'テスト投稿です。',
   }
-  const engineerPostDetailData: (
-    | CreateEngineerPostContentRequest
-    | CreateEngineerPostImageRequest
-    | CreateEngineerPostVideoRequest
+  const postRequestData: (
+    | PostContentRequest
+    | PostImageRequest
+    | PostVideoRequest
   )[] = [
     {
-      postType: PostType.TEXT,
+      postType: POST_TYPE.TEXT,
       header: 'テストタイトル',
       content: '始まり',
     },
     {
-      postType: PostType.IMAGE,
-      imageUrl: ['https://img.icons8.com/?size=48&id=V5cGWnc9R4xj&format=png', 'https://img.icons8.com/?size=48&id=V5cGWnc9R4xj&format=png'],
+      postType: POST_TYPE.IMAGE,
+      imageUrls: [
+        'https://img.icons8.com/?size=48&id=V5cGWnc9R4xj&format=png',
+        'https://img.icons8.com/?size=48&id=V5cGWnc9R4xj&format=png',
+      ],
     },
     {
-      postType: PostType.TEXT,
+      postType: POST_TYPE.TEXT,
       header: null,
       content: '終わり',
     },
   ]
 
-  const postStructureData: CreateEngineerPostStructureRequest[] = []
+  const postStructureData: PostStructureRequest[] = []
 
   await prisma.$transaction(async tx => {
-    const { id: postId } = await tx.engineerPosts.create({
+    const { id: postId } = await tx.posts.create({
       data: {
         ...engineerPostData,
         uid: TEST_UID,
       },
     })
 
-    for (const [order, data] of engineerPostDetailData.entries()) {
-      if (data.postType === PostType.TEXT) {
+    for (const [order, data] of postRequestData.entries()) {
+      if (data.postType === POST_TYPE.TEXT) {
         const { id: contentId } = await tx.postContents.create({
           data: {
             content: data.content,
@@ -53,25 +59,25 @@ export async function EngineerPostSeed() {
         })
         postStructureData.push({
           postId,
-          postType: PostType.TEXT,
+          postType: POST_TYPE.TEXT,
           postTypeId: contentId,
           order,
         })
       }
-      if (data.postType === PostType.IMAGE) {
+      if (data.postType === POST_TYPE.IMAGE) {
         const { id: imageId } = await tx.postImages.create({
           data: {
-            imageUrl: data.imageUrl,
+            imageUrls: data.imageUrls,
           },
         })
         postStructureData.push({
           postId,
-          postType: PostType.IMAGE,
+          postType: POST_TYPE.IMAGE,
           postTypeId: imageId,
           order,
         })
       }
-      if (data.postType === PostType.VIDEO) {
+      if (data.postType === POST_TYPE.VIDEO) {
         const { id: videoId } = await tx.postVideos.create({
           data: {
             videoUrl: data.videoUrl,
@@ -79,7 +85,7 @@ export async function EngineerPostSeed() {
         })
         postStructureData.push({
           postId,
-          postType: PostType.VIDEO,
+          postType: POST_TYPE.VIDEO,
           postTypeId: videoId,
           order,
         })

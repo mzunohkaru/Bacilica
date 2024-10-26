@@ -1,10 +1,10 @@
-import { CreateUserRequest } from '@repo/schema/server'
+import { UserRequest } from '@repo/schema/server'
 
 import prisma from '@/index'
-import { TEST_USER_DATA, UserType } from '@/utils/contains'
+import { TEST_USER_DATA, USER_TYPE } from '@/utils/contains'
 
 export async function UserSeed() {
-  const testUserUid = await prisma.auth.findUnique({
+  const testUid = await prisma.auth.findUnique({
     where: {
       email: TEST_USER_DATA.email,
     },
@@ -13,19 +13,15 @@ export async function UserSeed() {
     },
   })
 
-  if (!testUserUid) {
+  if (!testUid) {
     throw new Error('Test user not found')
   }
 
-  const userType = 'SENIOR'
-  const userTypeId = UserType[userType as keyof typeof UserType]
-
-  const userData: CreateUserRequest = {
-    uid: testUserUid.uid,
+  const userRequestData: UserRequest = {
+    uid: testUid.uid,
     userName: '山田太郎',
-    profile: '山田です！よろしくお願いいたします。',
     avatarUrl: 'https://avatars.githubusercontent.com/u/1234567890?v=4',
-    userTypeId: userTypeId,
+    userTypeId: USER_TYPE.SENIOR,
     invitedTicket: 3,
     invitedToken: 'abcdefg',
     githubUrl: 'https://github.com/yamada-taro',
@@ -33,9 +29,9 @@ export async function UserSeed() {
 
   await prisma.users.upsert({
     where: {
-      uid: testUserUid.uid,
+      uid: testUid.uid,
     },
-    update: userData,
-    create: userData,
+    update: userRequestData,
+    create: userRequestData,
   })
 }

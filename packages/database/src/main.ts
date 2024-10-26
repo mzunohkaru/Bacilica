@@ -1,6 +1,6 @@
 import prisma from '@/index'
 
-import { ProgrammingLanguageMasterSeed } from '@/post/post-category'
+import { ProgrammingLanguageMasterSeed } from '@/engineer-post/post-category'
 
 export async function handleMasterSeed() {
   try {

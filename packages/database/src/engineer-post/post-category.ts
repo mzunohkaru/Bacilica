@@ -1,9 +1,9 @@
 import prisma from '@/index'
-import { ProgrammingLanguageType } from '@/utils/contains'
+import { PROGRAMMING_LANGUAGE_TYPE } from '@/utils/contains'
 
 export async function ProgrammingLanguageMasterSeed() {
   await Promise.all(
-    Object.values(ProgrammingLanguageType).map(async programmingLanguage => {
+    Object.values(PROGRAMMING_LANGUAGE_TYPE).map(async programmingLanguage => {
       await prisma.programmingLanguages.upsert({
         where: { programmingLanguage },
         update: {},

@@ -2,13 +2,13 @@ import prisma from '@/index'
 
 import { AuthSeed } from '@/users/auth'
 import { UserSeed } from '@/users/user'
-import { EngineerPostSeed } from '@/post/engineer-post'
+import { PostSeed } from '@/engineer-post/post'
 
 export async function handleSeed() {
   try {
-    // await AuthSeed()
-    // await UserSeed()
-    await EngineerPostSeed()
+    await AuthSeed()
+    await UserSeed()
+    await PostSeed()
   } catch (e) {
     console.error(e)
   } finally {

@@ -4,7 +4,7 @@ import prisma from '@/index'
 import { TEST_USER_DATA } from '@/utils/contains'
 
 export async function AuthSeed() {
-  const userData: AuthRequest = {
+  const authRequestData: AuthRequest = {
     email: TEST_USER_DATA.email,
     password: TEST_USER_DATA.password,
     provider: 'email',
@@ -12,6 +12,6 @@ export async function AuthSeed() {
   }
 
   await prisma.auth.create({
-    data: userData,
+    data: authRequestData,
   })
 }
