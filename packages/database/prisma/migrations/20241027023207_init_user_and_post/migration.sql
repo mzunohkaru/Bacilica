@@ -57,17 +57,9 @@ CREATE TABLE "posts" (
 );
 
 -- CreateTable
-CREATE TABLE "post_programming_languages" (
+CREATE TABLE "post_category" (
     "post_id" INTEGER NOT NULL,
-    "programming_language_id" INTEGER NOT NULL
-);
-
--- CreateTable
-CREATE TABLE "programming_languages" (
-    "id" SERIAL NOT NULL,
-    "programming_language" TEXT NOT NULL,
-
-    CONSTRAINT "programming_languages_pkey" PRIMARY KEY ("id")
+    "programming_language" TEXT NOT NULL
 );
 
 -- CreateTable
@@ -136,10 +128,7 @@ CREATE TABLE "likes" (
 CREATE UNIQUE INDEX "auth_email_key" ON "auth"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "uq_post_programming_languages_post_id_programming_language_id" ON "post_programming_languages"("post_id", "programming_language_id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "uq_programming_languages_programming_language" ON "programming_languages"("programming_language");
+CREATE UNIQUE INDEX "uq_post_category_post_id_programming_language" ON "post_category"("post_id", "programming_language");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "uq_images_image_urls" ON "post_images"("image_urls");
@@ -169,10 +158,7 @@ ALTER TABLE "blocks" ADD CONSTRAINT "blocks_blocking_uid_fkey" FOREIGN KEY ("blo
 ALTER TABLE "posts" ADD CONSTRAINT "posts_uid_fkey" FOREIGN KEY ("uid") REFERENCES "users"("uid") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "post_programming_languages" ADD CONSTRAINT "post_programming_languages_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "post_programming_languages" ADD CONSTRAINT "post_programming_languages_programming_language_id_fkey" FOREIGN KEY ("programming_language_id") REFERENCES "programming_languages"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "post_category" ADD CONSTRAINT "post_category_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "post_structure" ADD CONSTRAINT "post_structure_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -84,33 +84,23 @@ model Posts {
 
   user Users? @relation(fields: [uid], references: [uid], onDelete: SetNull)
 
-  postProgrammingLanguages PostProgrammingLanguages[]
-  postStructure            PostStructure[]
-  likes                    Likes[]
-  comments                 Comments[]
-  saves                    Saves[]
+  postCategory  PostCategory[]
+  postStructure PostStructure[]
+  likes         Likes[]
+  comments      Comments[]
+  saves         Saves[]
 
   @@map("posts")
 }
 
-model PostProgrammingLanguages {
-  postId                Int @map("post_id")
-  programmingLanguageId Int @map("programming_language_id")
+model PostCategory {
+  postId   Int    @map("post_id")
+  category String @map("programming_language")
 
-  post                Posts                @relation(fields: [postId], references: [id], onDelete: Cascade)
-  programmingLanguage ProgrammingLanguages @relation(fields: [programmingLanguageId], references: [id], onDelete: Cascade)
+  post Posts @relation(fields: [postId], references: [id], onDelete: Cascade)
 
-  @@unique(fields: [postId, programmingLanguageId], map: "uq_post_programming_languages_post_id_programming_language_id")
-  @@map("post_programming_languages")
-}
-
-model ProgrammingLanguages {
-  id                  Int    @id @default(autoincrement())
-  programmingLanguage String @unique(map: "uq_programming_languages_programming_language") @map("programming_language")
-
-  postProgrammingLanguages PostProgrammingLanguages[]
-
-  @@map("programming_languages")
+  @@unique(fields: [postId, category], map: "uq_post_category_post_id_programming_language")
+  @@map("post_category")
 }
 
 model PostStructure {
