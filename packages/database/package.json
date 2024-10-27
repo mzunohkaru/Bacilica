@@ -13,7 +13,6 @@
     "db:dev": "read -p 'Enter the name of the migration: ' name && pnpm dlx prisma migrate dev --name \"$name\"",
     "db:deploy": "pnpm dlx prisma migrate deploy",
     "db:push": "pnpm dlx prisma db push",
-    "db:master-seed": "ts-node -r tsconfig-paths/register -P tsconfig.json src/main.ts",
     "db:seed": "ts-node -r tsconfig-paths/register -P tsconfig.json src/seed.ts",
     "db:format": "prisma format",
     "db:generate": "prisma generate",
