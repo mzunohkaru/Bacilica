@@ -3,7 +3,7 @@ export const TEST_USER_DATA = {
   password: '123456',
 }
 
-export const TEST_UID = '42180036-8b00-4c58-a38d-528f08355f9e'
+export const TEST_UID = 'be42c3f9-e165-463e-abe7-f3d238b9a39f'
 
 export const POST_TYPE = {
   TEXT: 'text',
@@ -18,12 +18,12 @@ export enum USER_TYPE {
   ADMIN = 99,
 }
 
-export const PROGRAMMING_LANGUAGE_TYPE = {
-  Typescript: 'Typescript',
-  React: 'React',
-  Nextjs: 'Nextjs',
-  Flutter: 'Flutter',
-  Swift: 'Swift',
-  Kotlin: 'Kotlin',
-  Python: 'Python',
+export enum POST_CATEGORIES {
+  Typescript = 'Typescript',
+  React = 'React',
+  Nextjs = 'Next.js',
+  Flutter = 'Flutter',
+  Swift = 'Swift',
+  Kotlin = 'Kotlin',
+  Python = 'Python',
 }

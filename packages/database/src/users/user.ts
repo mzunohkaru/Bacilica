@@ -17,7 +17,7 @@ export async function UserSeed() {
     throw new Error('Test user not found')
   }
 
-  const userRequestData: UserRequest = {
+  const userReqBody: UserRequest = {
     uid: testUid.uid,
     userName: '山田太郎',
     avatarUrl: 'https://avatars.githubusercontent.com/u/1234567890?v=4',
@@ -31,7 +31,7 @@ export async function UserSeed() {
     where: {
       uid: testUid.uid,
     },
-    update: userRequestData,
-    create: userRequestData,
+    update: userReqBody,
+    create: userReqBody,
   })
 }
