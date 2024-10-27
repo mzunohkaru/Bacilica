@@ -27,7 +27,7 @@ model Users {
   uid           String  @id @db.Uuid
   userName      String  @map("user_name")
   avatarUrl     String? @map("avatar_url")
-  userTypeId    Int     @map("user_type_id")
+  userType      String  @map("user_type")
   invitedTicket Int     @default(0) @map("invited_ticket")
   invitedToken  String? @map("invited_token")
   githubUrl     String? @map("github_url")
