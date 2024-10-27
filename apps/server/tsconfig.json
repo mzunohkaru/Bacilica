@@ -1,12 +1,18 @@
 {
   "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
-    "esModuleInterop": true,
-    "strict": true,
+    "target": "es2017",
+    "module": "commonjs",
     "outDir": "./dist",
     "rootDir": "./src",
     "declaration": false,
     "declarationMap": false,
+    "removeComments": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
     "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
