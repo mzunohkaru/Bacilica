@@ -5,7 +5,7 @@ export const PostRequest = z.object({
   title: z.string(),
   description: z.string().nullish(),
   githubUrl: z.string().nullish(),
-})
+}).brand('PostRequest')
 
 export type PostRequest = z.infer<typeof PostRequest>
 
@@ -20,6 +20,6 @@ export const PostResponse = z.object({
   algorithmPoint: z.number().default(0),
   githubUrl: z.string().nullish(),
   createdAt: z.date(),
-})
+}).brand('PostResponse')
 
 export type PostResponse = z.infer<typeof PostResponse>
