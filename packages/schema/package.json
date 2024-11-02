@@ -5,7 +5,8 @@
   "license": "UNLICENSED",
   "exports": {
     "./src/server": "./src/server/index.ts",
-    "./src/DTO": "./src/DTO/index.ts"
+    "./src/DTO": "./src/DTO/index.ts",
+    "./src/utils": "./src/utils/index.ts"
   },
   "scripts": {
     "check": "biome check ./src",
