@@ -1,11 +1,12 @@
-import prisma from '@/index'
-
+import { POST_TYPE, POST_CATEGORIES } from '@repo/schema/src/utils'
 import {
   PostContentRequest,
   PostImageRequest,
   PostVideoRequest,
 } from '@repo/schema/src/server'
-import { TEST_UID, POST_TYPE, POST_CATEGORIES } from '@/utils/contains'
+
+import prisma from '@/index'
+import { TEST_UID } from '@/contains'
 
 export async function PostSeed() {
   const engineerPostData = {

@@ -1,7 +1,8 @@
 import { UserRequest } from '@repo/schema/src/server'
+import { USER_TYPE } from '@repo/schema/src/utils'
 
 import prisma from '@/index'
-import { TEST_USER_DATA, USER_TYPE } from '@/utils/contains'
+import { TEST_USER_DATA } from '@/contains'
 
 export async function UserSeed() {
   const testUid = await prisma.auth.findUnique({
@@ -20,7 +21,7 @@ export async function UserSeed() {
   const userReqBody: UserRequest = {
     uid: testUid.uid,
     userName: '山田太郎',
-    userType: USER_TYPE.SENIOR.toString(),
+    userType: USER_TYPE.SENIOR,
     avatarUrl: 'https://avatars.githubusercontent.com/u/1234567890?v=4',
     invitedTicket: 3,
     invitedToken: 'abcdefg',

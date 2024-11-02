@@ -1,7 +1,7 @@
 import { AuthRequest } from '@repo/schema/src/server'
 
 import prisma from '@/index'
-import { TEST_USER_DATA } from '@/utils/contains'
+import { TEST_USER_DATA } from '@/contains'
 
 export async function AuthSeed() {
   const authReqBody: AuthRequest = {
