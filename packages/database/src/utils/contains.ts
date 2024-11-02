@@ -1,9 +1,9 @@
 export const TEST_USER_DATA = {
   email: 'test@example.com',
-  password: '123456',
+  password: '123456abc',
 }
 
-export const TEST_UID = 'be42c3f9-e165-463e-abe7-f3d238b9a39f'
+export const TEST_UID = 'e7a7de11-8657-4fb0-9782-9f69696387eb'
 
 export const POST_TYPE = {
   TEXT: 'text',
@@ -12,10 +12,10 @@ export const POST_TYPE = {
 } as const
 
 export enum USER_TYPE {
-  JUNIOR = 0,
-  SENIOR = 1,
-  PROFESSIONAL = 2,
-  ADMIN = 99,
+  JUNIOR,
+  SENIOR,
+  PROFESSIONAL,
+  ADMIN,
 }
 
 export enum POST_CATEGORIES {

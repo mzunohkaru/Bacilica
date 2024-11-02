@@ -4,12 +4,8 @@ import {
   PostContentRequest,
   PostImageRequest,
   PostVideoRequest,
-} from '@repo/schema/server'
-import {
-  TEST_UID,
-  POST_TYPE,
-  POST_CATEGORIES,
-} from '@/utils/contains'
+} from '@repo/schema/src/server'
+import { TEST_UID, POST_TYPE, POST_CATEGORIES } from '@/utils/contains'
 
 export async function PostSeed() {
   const engineerPostData = {
@@ -30,7 +26,7 @@ export async function PostSeed() {
       postType: POST_TYPE.IMAGE,
       imageUrls: [
         'https://img.icons8.com/?size=48&id=V5cGWnc9R4xj&format=png',
-        'https://img.icons8.com/?size=48&id=V5cGWnc9R4xj&format3=png',
+        'https://img.icons8.com/?size=48&id=V5cGWnc9R4xj&format2=png',
       ],
     },
     {
@@ -98,7 +94,7 @@ export async function PostSeed() {
 
     await Promise.all(
       postCategoryReqBody.map(
-        async (category) =>
+        async category =>
           await tx.postCategory.create({
             data: {
               postId,
