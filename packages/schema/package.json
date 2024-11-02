@@ -2,6 +2,7 @@
   "name": "@repo/schema",
   "version": "1.0.0",
   "private": true,
+  "license": "UNLICENSED",
   "exports": {
     "./src/server": "./src/server/index.ts",
     "./src/DTO": "./src/DTO/index.ts"
