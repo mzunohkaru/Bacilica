@@ -16,7 +16,7 @@ CREATE TABLE "users" (
     "uid" UUID NOT NULL,
     "user_name" TEXT NOT NULL,
     "avatar_url" TEXT,
-    "user_type_id" INTEGER NOT NULL,
+    "user_type" TEXT NOT NULL,
     "invited_ticket" INTEGER NOT NULL DEFAULT 0,
     "invited_token" TEXT,
     "github_url" TEXT,
