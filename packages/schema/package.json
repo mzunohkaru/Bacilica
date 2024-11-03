@@ -2,9 +2,11 @@
   "name": "@repo/schema",
   "version": "1.0.0",
   "private": true,
+  "license": "UNLICENSED",
   "exports": {
-    "./server": "./src/server/index.ts",
-    "./DTO": "./src/DTO/index.ts"
+    "./src/server": "./src/server/index.ts",
+    "./src/DTO": "./src/DTO/index.ts",
+    "./src/utils": "./src/utils/index.ts"
   },
   "scripts": {
     "check": "biome check ./src",

@@ -1,17 +1,16 @@
-import { AuthRequest } from '@repo/schema/server'
+import { AuthRequest } from '@repo/schema/src/server'
 
 import prisma from '@/index'
-import { TEST_USER_DATA } from '@/utils/contains'
+import { TEST_USER_DATA } from '@/contains'
 
 export async function AuthSeed() {
-  const userData: AuthRequest = {
+  const authReqBody: AuthRequest = {
     email: TEST_USER_DATA.email,
     password: TEST_USER_DATA.password,
     provider: 'email',
-    lastSignInAt: new Date(),
   }
 
   await prisma.auth.create({
-    data: userData,
+    data: authReqBody,
   })
 }

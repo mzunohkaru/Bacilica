@@ -10,11 +10,11 @@ const SNSButton = (props: SNSButtonType) => {
     <div className='rounded-full p-3 bg-[#D9D9D9]'>
       <Image
         src={props.imagePath}
-        alt="icon"
+        alt='icon'
         width={40}
         height={40}
         objectFit='contain'
-        className="bg-[#D9D9D9]"
+        className='bg-[#D9D9D9]'
       />
     </div>
   )
