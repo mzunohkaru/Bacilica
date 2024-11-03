@@ -4,9 +4,11 @@ import { logger } from 'hono/logger'
 import { prettyJSON } from 'hono/pretty-json'
 import { serve } from '@hono/node-server'
 
-import user from '@/router/user'
+import { HttpStatusCode } from '@repo/schema/src/utils'
+
 import auth from '@/router/auth'
-import follow from '@/router/follow'
+import test from '@/router/test'
+
 const app = new Hono().basePath('/api')
 
 app.use(cors())
@@ -19,11 +21,13 @@ app.get('/', c => c.text('Hello, Hono!'))
 app
   .onError((err, c) => {
     console.error(err)
-    return c.json({ message: err.message }, 500)
+    return c.json(
+      { message: err.message, code: err.cause },
+      HttpStatusCode.INTERNAL_SERVER_ERROR,
+    )
   })
-  .route('/user', user)
+  .route('/test', test)
   .route('/auth', auth)
-  .route('/follow', follow)
 
 const PORT = process.env.PORT || 3000
 
