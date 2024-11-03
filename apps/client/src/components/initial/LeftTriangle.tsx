@@ -13,4 +13,4 @@ const LeftTriangle: React.FC = () => {
   )
 }
 
-export default LeftTriangle;
+export default LeftTriangle
